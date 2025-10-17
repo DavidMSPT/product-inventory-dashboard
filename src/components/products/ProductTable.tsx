@@ -48,13 +48,13 @@ function ProductTable({
                 <div className="flex items-center justify-end gap-2">
                   <button
                     onClick={() => onEdit(p)}
-                    className="rounded-lg border border-border px-2.5 py-1.5 text-xs hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="rounded-lg border border-border px-2.5 py-1.5 text-xs hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => onDelete(p)}
-                    className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs text-rose-700 hover:bg-rose-100 focus:outline-none focus:ring-2 focus:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300"
+                    className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs text-rose-700 hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300"
                   >
                     Delete
                   </button>

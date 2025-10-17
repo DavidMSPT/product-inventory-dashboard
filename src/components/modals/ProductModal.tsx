@@ -86,7 +86,7 @@ export default function ProductModal({
                 ref={firstInputRef}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
             </LabeledInput>
             <LabeledInput label="Description" error={errors.description}>
@@ -94,7 +94,7 @@ export default function ProductModal({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
-                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
             </LabeledInput>
             <div className="grid grid-cols-2 gap-3">
@@ -104,7 +104,7 @@ export default function ProductModal({
                   onChange={(e) => setPrice(e.target.value)}
                   type="number"
                   inputMode="decimal"
-                  className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 />
               </LabeledInput>
               <LabeledInput label="Stock" error={errors.stock}>
@@ -113,7 +113,7 @@ export default function ProductModal({
                   onChange={(e) => setStock(e.target.value)}
                   type="number"
                   inputMode="numeric"
-                  className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 />
               </LabeledInput>
             </div>
@@ -121,7 +121,7 @@ export default function ProductModal({
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as Category)}
-                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <option>Electronics</option>
                 <option>Clothing</option>
@@ -133,7 +133,7 @@ export default function ProductModal({
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://..."
-                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+                className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
             </LabeledInput>
           </div>
@@ -157,14 +157,14 @@ export default function ProductModal({
         <div className="mt-5 flex items-center justify-end gap-2">
           <button
             onClick={onClose}
-            className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+            className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Cancel
           </button>
           <button
             onClick={submit}
             disabled={busy}
-            className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {busy ? "Saving..." : mode === "add" ? "Add Product" : "Save Changes"}
           </button>

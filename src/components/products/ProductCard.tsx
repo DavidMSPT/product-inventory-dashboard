@@ -13,7 +13,7 @@ function ProductCard({
   onDelete: (product: Product) => void
 }) {
   return (
-    <div className="group rounded-2xl border border-border bg-surface shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <div className="group rounded-2xl border border-border bg-surface shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg">
       <div className="aspect-[4/3] w-full overflow-hidden rounded-t-2xl">
         <img
           src={product.imageUrl}
@@ -37,13 +37,13 @@ function ProductCard({
           <div className="flex items-center gap-2">
             <button
               onClick={() => onEdit(product)}
-              className="rounded-lg border border-border px-2.5 py-1.5 hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+              className="rounded-lg border border-border px-2.5 py-1.5 hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg"
             >
               Edit
             </button>
             <button
               onClick={() => onDelete(product)}
-              className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-rose-700 hover:bg-rose-100 focus:outline-none focus:ring-2 focus:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300"
+              className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-rose-700 hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300 dark:hover:border-rose-500 dark:hover:shadow-rose-500/20 dark:hover:shadow-lg"
             >
               Delete
             </button>

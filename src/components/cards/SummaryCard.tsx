@@ -9,7 +9,7 @@ export default function SummaryCard({
 }) {
   return (
     <div className={`${full ? "col-span-2 sm:col-span-4" : ""}`}>
-      <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition hover:shadow-md focus-within:ring-2 focus-within:ring-ring">
+      <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition hover:shadow-md dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg focus-within:ring-2 focus-within:ring-ring">
         <div className="text-xs uppercase tracking-wide text-text-muted">{title}</div>
         <div className="mt-1 text-2xl font-semibold">{value}</div>
       </div>

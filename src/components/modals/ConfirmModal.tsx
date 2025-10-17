@@ -25,7 +25,7 @@ export default function ConfirmModal({
           <button
             onClick={onCancel}
             disabled={busy}
-            className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+            className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Cancel
           </button>
@@ -39,7 +39,7 @@ export default function ConfirmModal({
               }
             }}
             disabled={busy}
-            className={`rounded-xl px-3 py-2 text-sm font-medium shadow focus:outline-none focus:ring-2 focus:ring-offset-0 ${destructive ? "bg-rose-600 hover:bg-rose-700 focus:ring-rose-500 text-white" : "bg-primary hover:bg-primary/90 focus:ring-ring text-primary-foreground"}`}
+            className={`rounded-xl px-3 py-2 text-sm font-medium shadow focus-visible:outline-none focus-visible:ring-2 focus:ring-offset-0 ${destructive ? "bg-rose-600 hover:bg-rose-700 focus-visible:ring-rose-500 text-white" : "bg-primary hover:bg-primary/90 focus-visible:ring-ring text-primary-foreground"}`}
           >
             {busy ? "Working..." : confirmText}
           </button>

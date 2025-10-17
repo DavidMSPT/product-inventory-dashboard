@@ -14,7 +14,7 @@ export default function ErrorBanner({
         </div>
         <button
           onClick={onRetry}
-          className="rounded-lg border border-rose-200 bg-white/40 px-3 py-1.5 text-sm hover:bg-white/70 focus:outline-none focus:ring-2 focus:ring-rose-500 dark:border-rose-700 dark:bg-rose-900/20 dark:hover:bg-rose-900/40"
+          className="rounded-lg border border-rose-200 bg-white/40 px-3 py-1.5 text-sm hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-rose-700 dark:bg-rose-900/20 dark:hover:bg-rose-900/40"
         >
           Retry
         </button>

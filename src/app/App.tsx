@@ -128,13 +128,13 @@ export default function App() {
               onClick={() =>
                 dispatch({ type: "SET_THEME", theme: state.theme === "light" ? "dark" : "light" })
               }
-              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {state.theme === "light" ? "Dark" : "Light"} mode
             </button>
             <button
               onClick={onAdd}
-              className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
+              className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Add Product
             </button>
@@ -150,14 +150,14 @@ export default function App() {
               value={state.query}
               onChange={(e) => dispatch({ type: "SET_QUERY", query: e.target.value })}
               placeholder="Search by name or description"
-              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
           <div className="md:col-span-2">
             <select
               value={state.category}
               onChange={(e) => dispatch({ type: "SET_CATEGORY", category: e.target.value as any })}
-              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="All">All Categories</option>
               <option>Electronics</option>
@@ -169,7 +169,7 @@ export default function App() {
             <select
               value={state.stockFilter}
               onChange={(e) => dispatch({ type: "SET_STOCK", stock: e.target.value as any })}
-              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="All">Any Stock</option>
               <option>In Stock</option>
@@ -184,7 +184,7 @@ export default function App() {
               value={state.priceMin}
               onChange={(e) => dispatch({ type: "SET_PRICE_MIN", value: e.target.value })}
               placeholder="Min €"
-              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
           <div className="md:col-span-2">
@@ -194,7 +194,7 @@ export default function App() {
               value={state.priceMax}
               onChange={(e) => dispatch({ type: "SET_PRICE_MAX", value: e.target.value })}
               placeholder="Max €"
-              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function App() {
               onChange={(e) =>
                 dispatch({ type: "SET_SORT", key: e.target.value as SortKey, dir: state.sortDir })
               }
-              className="rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
+              className="rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="name">Name</option>
               <option value="price">Price</option>
@@ -221,7 +221,7 @@ export default function App() {
                   dir: state.sortDir === "asc" ? "desc" : "asc",
                 })
               }
-              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
+              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {state.sortDir === "asc" ? "Asc" : "Desc"}
             </button>
@@ -230,13 +230,13 @@ export default function App() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => dispatch({ type: "SET_VIEW", view: "grid" })}
-              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring ${state.view === "grid" ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-bg-muted"}`}
+              className={`rounded-xl border px-3 py-2 text-sm shadow-sm dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${state.view === "grid" ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-bg-muted"}`}
             >
               Grid
             </button>
             <button
               onClick={() => dispatch({ type: "SET_VIEW", view: "table" })}
-              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring ${state.view === "table" ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-bg-muted"}`}
+              className={`rounded-xl border px-3 py-2 text-sm shadow-sm dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${state.view === "table" ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-bg-muted"}`}
             >
               Table
             </button>
