@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Inventory Dashboard</title>
+    <script>
+      // Initialize theme before React renders to prevent flash
+      (function() {
+        const theme = localStorage.getItem('inventory.theme') || 'light'
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
   </head>
   <body class="min-h-screen">
     <div id="root"></div>

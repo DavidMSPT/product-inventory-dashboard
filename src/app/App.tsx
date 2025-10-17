@@ -17,11 +17,9 @@ import type { SortKey, Product } from "@store/types"
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  // Sync theme with DOM
+  // Sync theme changes with DOM
   useEffect(() => {
-    const root = document.documentElement
-    if (state.theme === "dark") root.classList.add("dark")
-    else root.classList.remove("dark")
+    document.documentElement.classList.toggle("dark", state.theme === "dark")
   }, [state.theme])
 
   // Persist theme to localStorage
@@ -138,7 +136,7 @@ export default function App() {
               onClick={onAdd}
               className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
             >
-              + Add Product
+              Add Product
             </button>
           </div>
         </div>

@@ -1,33 +1,70 @@
-# Product Inventory Dashboard (Split Structure)
+# 📦 Product Inventory Dashboard (Interview Challenge)
 
-A React + TypeScript + Tailwind app with a sane file structure, because future-you deserves mercy.
+A modern, fully-typed React dashboard for managing product inventory with real-time filtering, sorting, and statistics.
 
-## Structure
-```text
-src/
-├─ app/
-│  └─ App.tsx
-├─ components/
-│  ├─ cards/ SummaryCard.tsx
-│  ├─ feedback/ ErrorBanner.tsx, EmptyState.tsx, SkeletonGrid.tsx
-│  ├─ modals/ ModalShell.tsx, ConfirmModal.tsx, LabeledInput.tsx, ProductModal.tsx
-│  └─ products/ ProductCard.tsx, ProductTable.tsx, StatusBadge.tsx
-├─ lib/
-│  ├─ api.ts
-│  ├─ format.ts
-│  ├─ stock.ts
-│  └─ storage.ts
-├─ store/
-│  ├─ reducer.ts
-│  ├─ state.ts
-│  └─ types.ts
-├─ styles/
-│  └─ index.css
-├─ main.tsx
-```
+## ✨ Features
 
-## Dev
+- 🎨 **Dark Mode** - Seamless theme switching with no flash
+- 🔍 **Advanced Filtering** - Search, category, stock status, and price range filters
+- 📊 **Real-time Statistics** - Track total products, stock levels, and average pricing
+- 🎯 **Dual Views** - Switch between grid cards and detailed table view
+- 💾 **Local Persistence** - Data and preferences saved in localStorage
+- ⚡ **Performance Optimized** - Memoized components, single-pass calculations
+- 🎭 **Type-Safe** - Full TypeScript with discriminated unions
+- 🎯 **Pure Reducer Pattern** - Side-effect free state management
+
+## 🚀 Quick Start
+
 ```bash
-pnpm i   # or npm i / yarn
-pnpm dev
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
 ```
+
+## 🏗️ Architecture
+
+```
+src/
+├── app/              # Main application component
+├── components/       # Reusable UI components
+│   ├── cards/        # Summary cards
+│   ├── feedback/     # Loading, error, empty states
+│   ├── modals/       # Dialog components
+│   └── products/     # Product display components
+├── lib/              # Utilities and helpers
+│   ├── api.ts        # Product CRUD operations
+│   ├── format.ts     # Currency & text formatting
+│   ├── stock.ts      # Stock status logic
+│   └── storage.ts    # localStorage abstraction
+├── store/            # State management
+│   ├── state.ts      # Global state & types
+│   ├── reducer.ts    # Pure reducer logic
+│   └── types.ts      # TypeScript definitions
+└── styles/           # CSS theme variables
+```
+
+## 🎯 Tech Stack
+
+- **React 18** - UI library with hooks
+- **TypeScript** - Type safety throughout
+- **Tailwind CSS** - Utility-first styling with CSS variables
+- **Vite** - Lightning-fast build tool
+- **useReducer** - Predictable state management
+
+
+## 🌐 Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+
+Requires JavaScript enabled and localStorage support.
+
+---
+
+Built with ❤️ using React + TypeScript + Tailwind CSS
