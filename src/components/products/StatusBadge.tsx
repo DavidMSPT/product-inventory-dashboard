@@ -9,7 +9,7 @@ export default function StatusBadge({ stock }: { stock: number }) {
         : "bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300"
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${color}`}
+      className={`inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-medium ${color}`}
     >
       {status}
     </span>
