@@ -128,7 +128,7 @@ export default function App() {
               onClick={() =>
                 dispatch({ type: "SET_THEME", theme: state.theme === "light" ? "dark" : "light" })
               }
-              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {state.theme === "light" ? "Dark" : "Light"} mode
             </button>
