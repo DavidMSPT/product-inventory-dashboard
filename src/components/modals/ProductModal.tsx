@@ -75,10 +75,7 @@ export default function ProductModal({
 
   return (
     <ModalShell onClose={onClose}>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xl dark:border-gray-800 dark:bg-gray-950"
-      >
+      <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xl dark:border-gray-800 dark:bg-gray-950">
         <div className="mb-3 text-lg font-semibold">
           {mode === "add" ? "Add Product" : "Edit Product"}
         </div>

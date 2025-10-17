@@ -18,10 +18,7 @@ export default function ConfirmModal({
   const [busy, setBusy] = useState(false)
   return (
     <ModalShell onClose={onCancel}>
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xl dark:border-gray-800 dark:bg-gray-950"
-      >
+      <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xl dark:border-gray-800 dark:bg-gray-950">
         <div className="text-lg font-semibold">{title}</div>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{body}</p>
         <div className="mt-5 flex items-center justify-end gap-2">
