@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import ModalShell from "./ModalShell"
 export default function ConfirmModal({
   title,
@@ -18,14 +18,14 @@ export default function ConfirmModal({
   const [busy, setBusy] = useState(false)
   return (
     <ModalShell onClose={onCancel}>
-      <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xl dark:border-gray-800 dark:bg-gray-950">
+      <div className="rounded-2xl border border-border bg-surface p-5 shadow-xl">
         <div className="text-lg font-semibold">{title}</div>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{body}</p>
+        <p className="mt-2 text-sm text-text-muted">{body}</p>
         <div className="mt-5 flex items-center justify-end gap-2">
           <button
             onClick={onCancel}
             disabled={busy}
-            className="rounded-xl border border-gray-200 px-3 py-2 text-sm shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800"
+            className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
           >
             Cancel
           </button>
@@ -39,7 +39,7 @@ export default function ConfirmModal({
               }
             }}
             disabled={busy}
-            className={`rounded-xl px-3 py-2 text-sm font-medium text-white shadow focus:outline-none focus:ring-2 focus:ring-offset-0 ${destructive ? "bg-rose-600 hover:bg-rose-700 focus:ring-rose-500" : "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"}`}
+            className={`rounded-xl px-3 py-2 text-sm font-medium shadow focus:outline-none focus:ring-2 focus:ring-offset-0 ${destructive ? "bg-rose-600 hover:bg-rose-700 focus:ring-rose-500 text-white" : "bg-primary hover:bg-primary/90 focus:ring-ring text-primary-foreground"}`}
           >
             {busy ? "Working..." : confirmText}
           </button>

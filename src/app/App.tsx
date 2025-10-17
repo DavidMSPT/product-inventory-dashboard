@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useReducer } from "react"
+import { useCallback, useEffect, useMemo, useReducer } from "react"
 import SummaryCard from "@components/cards/SummaryCard"
 import ProductCard from "@components/products/ProductCard"
 import ProductTable from "@components/products/ProductTable"
@@ -92,8 +92,8 @@ export default function App() {
   const onDelete = (p: any) => dispatch({ type: "CONFIRM_DELETE", product: p })
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
-      <header className="border-b border-gray-200 dark:border-gray-800">
+    <div className="min-h-screen bg-bg text-text transition-colors duration-300">
+      <header className="border-b border-border">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <h1 className="text-2xl font-bold tracking-tight">Product Inventory Dashboard</h1>
           <div className="flex items-center gap-2">
@@ -101,13 +101,13 @@ export default function App() {
               onClick={() =>
                 dispatch({ type: "SET_THEME", theme: state.theme === "light" ? "dark" : "light" })
               }
-              className="rounded-xl border border-gray-200 px-3 py-2 text-sm shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800"
+              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
             >
               {state.theme === "light" ? "Dark" : "Light"} mode
             </button>
             <button
               onClick={onAdd}
-              className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
             >
               + Add Product
             </button>
@@ -123,14 +123,14 @@ export default function App() {
               value={state.query}
               onChange={(e) => dispatch({ type: "SET_QUERY", query: e.target.value })}
               placeholder="Search by name or description"
-              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
           <div className="md:col-span-2">
             <select
               value={state.category}
               onChange={(e) => dispatch({ type: "SET_CATEGORY", category: e.target.value as any })}
-              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
             >
               <option value="All">All Categories</option>
               <option>Electronics</option>
@@ -142,7 +142,7 @@ export default function App() {
             <select
               value={state.stockFilter}
               onChange={(e) => dispatch({ type: "SET_STOCK", stock: e.target.value as any })}
-              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
             >
               <option value="All">Any Stock</option>
               <option>In Stock</option>
@@ -157,7 +157,7 @@ export default function App() {
               value={state.priceMin}
               onChange={(e) => dispatch({ type: "SET_PRICE_MIN", value: e.target.value })}
               placeholder="Min €"
-              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
           <div className="md:col-span-2">
@@ -167,7 +167,7 @@ export default function App() {
               value={state.priceMax}
               onChange={(e) => dispatch({ type: "SET_PRICE_MAX", value: e.target.value })}
               placeholder="Max €"
-              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+              className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm placeholder:text-text-muted focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
         </div>
@@ -180,7 +180,7 @@ export default function App() {
               onChange={(e) =>
                 dispatch({ type: "SET_SORT", key: e.target.value as SortKey, dir: state.sortDir })
               }
-              className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+              className="rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring"
             >
               <option value="name">Name</option>
               <option value="price">Price</option>
@@ -194,7 +194,7 @@ export default function App() {
                   dir: state.sortDir === "asc" ? "desc" : "asc",
                 })
               }
-              className="rounded-xl border border-gray-200 px-3 py-2 text-sm shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800"
+              className="rounded-xl border border-border px-3 py-2 text-sm shadow-sm hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
             >
               {state.sortDir === "asc" ? "Asc" : "Desc"}
             </button>
@@ -203,13 +203,13 @@ export default function App() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => dispatch({ type: "SET_VIEW", view: "grid" })}
-              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 ${state.view === "grid" ? "border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/30" : "border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring ${state.view === "grid" ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-bg-muted"}`}
             >
               Grid
             </button>
             <button
               onClick={() => dispatch({ type: "SET_VIEW", view: "table" })}
-              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 ${state.view === "table" ? "border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/30" : "border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring ${state.view === "table" ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-bg-muted"}`}
             >
               Table
             </button>
@@ -294,7 +294,7 @@ export default function App() {
         />
       )}
 
-      <footer className="mx-auto max-w-7xl px-4 pb-10 pt-6 text-center text-xs text-gray-500">
+      <footer className="mx-auto max-w-7xl px-4 pb-10 pt-6 text-center text-xs text-text-muted">
         Built with React + TypeScript + Tailwind. Data persists in your browser.
       </footer>
     </div>
