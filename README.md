@@ -28,6 +28,15 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 ```bash
 # Build for production
 npm run build
+
+# Run tests
+npm test
+
+# Run tests with UI
+npm run test:ui
+
+# Generate coverage report
+npm run test:coverage
 ```
 
 ## 🏗️ Architecture
@@ -59,7 +68,36 @@ src/
 - **Tailwind CSS** - Utility-first styling with CSS variables
 - **Vite** - Lightning-fast build tool
 - **useReducer** - Predictable state management
+- **Vitest** - Unit testing framework
+- **React Testing Library** - Component testing utilities
 
+
+## 🧪 Testing
+
+The project uses **Vitest** and **React Testing Library** for comprehensive testing:
+
+- **Unit Tests** - Utility functions (formatting, stock logic)
+- **Component Tests** - React components with user interactions
+- **Reducer Tests** - State management logic
+
+```bash
+# Run all tests
+npm test
+
+# Watch mode (default)
+npm test
+
+# Run tests with UI interface
+npm run test:ui
+
+# Generate coverage report
+npm run test:coverage
+```
+
+**Test Coverage:**
+- ✅ Utility functions (`format.ts`, `stock.ts`)
+- ✅ Components (`ProductCard`, `StatusBadge`)
+- ✅ State reducer (`reducer.ts`)
 
 ## 🌐 Browser Support
 
