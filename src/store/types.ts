@@ -1,4 +1,7 @@
 export type Category = 'Electronics' | 'Clothing' | 'Grocery'
+
+export const CATEGORIES: readonly Category[] = ['Electronics', 'Clothing', 'Grocery'] as const
+
 export interface Product {
   id: string
   name: string

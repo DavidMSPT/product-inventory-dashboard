@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import type { Product, Category } from "@store/types"
+import { CATEGORIES } from "@store/types"
 import ModalShell from "./ModalShell"
 import LabeledInput from "./LabeledInput"
 
@@ -123,9 +124,11 @@ export default function ProductModal({
                 onChange={(e) => setCategory(e.target.value as Category)}
                 className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <option>Electronics</option>
-                <option>Clothing</option>
-                <option>Grocery</option>
+                {CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
               </select>
             </LabeledInput>
             <LabeledInput label="Image URL" error={errors.imageUrl}>

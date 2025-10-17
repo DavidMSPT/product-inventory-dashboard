@@ -8,11 +8,18 @@ import SkeletonGrid from "@components/feedback/SkeletonGrid"
 import ConfirmModal from "@components/modals/ConfirmModal"
 import ProductModal from "@components/modals/ProductModal"
 import { api } from "@lib/api"
-import { stockStatus } from "@lib/stock"
+import { stockStatus, STOCK_STATUSES } from "@lib/stock"
 import { formatCurrency } from "@lib/format"
 import { initialState } from "@store/state"
 import { reducer } from "@store/reducer"
 import type { SortKey, Product } from "@store/types"
+import { CATEGORIES } from "@store/types"
+
+const SORT_KEYS: readonly { key: SortKey; label: string }[] = [
+  { key: "name", label: "Name" },
+  { key: "price", label: "Price" },
+  { key: "stock", label: "Stock" },
+] as const
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -160,9 +167,11 @@ export default function App() {
               className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="All">All Categories</option>
-              <option>Electronics</option>
-              <option>Clothing</option>
-              <option>Grocery</option>
+              {CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
             </select>
           </div>
           <div className="md:col-span-2">
@@ -172,9 +181,11 @@ export default function App() {
               className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="All">Any Stock</option>
-              <option>In Stock</option>
-              <option>Low Stock</option>
-              <option>Out of Stock</option>
+              {STOCK_STATUSES.map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
             </select>
           </div>
           <div className="md:col-span-2">
@@ -209,9 +220,11 @@ export default function App() {
               }
               className="rounded-xl border border-border bg-surface px-3 py-2 text-sm shadow-sm focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="name">Name</option>
-              <option value="price">Price</option>
-              <option value="stock">Stock</option>
+              {SORT_KEYS.map(({ key, label }) => (
+                <option key={key} value={key}>
+                  {label}
+                </option>
+              ))}
             </select>
             <button
               onClick={() =>
