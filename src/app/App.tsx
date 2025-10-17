@@ -1,76 +1,95 @@
-import React, { useCallback, useEffect, useMemo, useReducer } from 'react'
-import SummaryCard from '@components/cards/SummaryCard'
-import ProductCard from '@components/products/ProductCard'
-import ProductTable from '@components/products/ProductTable'
-import ErrorBanner from '@components/feedback/ErrorBanner'
-import EmptyState from '@components/feedback/EmptyState'
-import SkeletonGrid from '@components/feedback/SkeletonGrid'
-import ConfirmModal from '@components/modals/ConfirmModal'
-import ProductModal from '@components/modals/ProductModal'
-import { api } from '@lib/api'
-import { stockStatus } from '@lib/stock'
-import { formatCurrency } from '@lib/format'
-import { initialState } from '@store/state'
-import { reducer } from '@store/reducer'
-import type { SortKey } from '@store/types'
+import React, { useCallback, useEffect, useMemo, useReducer } from "react"
+import SummaryCard from "@components/cards/SummaryCard"
+import ProductCard from "@components/products/ProductCard"
+import ProductTable from "@components/products/ProductTable"
+import ErrorBanner from "@components/feedback/ErrorBanner"
+import EmptyState from "@components/feedback/EmptyState"
+import SkeletonGrid from "@components/feedback/SkeletonGrid"
+import ConfirmModal from "@components/modals/ConfirmModal"
+import ProductModal from "@components/modals/ProductModal"
+import { api } from "@lib/api"
+import { stockStatus } from "@lib/stock"
+import { formatCurrency } from "@lib/format"
+import { initialState } from "@store/state"
+import { reducer } from "@store/reducer"
+import type { SortKey } from "@store/types"
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
     const root = document.documentElement
-    if (state.theme === 'dark') root.classList.add('dark')
-    else root.classList.remove('dark')
+    if (state.theme === "dark") root.classList.add("dark")
+    else root.classList.remove("dark")
   }, [state.theme])
 
   const load = useCallback(async () => {
-    dispatch({ type: 'LOAD_START' })
+    dispatch({ type: "LOAD_START" })
     try {
       const products = await api.list()
-      dispatch({ type: 'LOAD_SUCCESS', products })
+      dispatch({ type: "LOAD_SUCCESS", products })
     } catch (e: any) {
-      dispatch({ type: 'LOAD_ERROR', error: e?.message || 'Failed to load' })
+      dispatch({ type: "LOAD_ERROR", error: e?.message || "Failed to load" })
     }
   }, [])
 
-  useEffect(() => { load() }, [load])
+  useEffect(() => {
+    load()
+  }, [load])
 
   const filtered = useMemo(() => {
     const q = state.query.trim().toLowerCase()
     const min = parseFloat(state.priceMin)
     const max = parseFloat(state.priceMax)
     let list = state.products.filter((p) => {
-      const matchesQuery = q.length === 0 || p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
-      const matchesCategory = state.category === 'All' || p.category === state.category
+      const matchesQuery =
+        q.length === 0 ||
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q)
+      const matchesCategory = state.category === "All" || p.category === state.category
       const status = stockStatus(p.stock)
-      const matchesStock = state.stockFilter === 'All' || status === state.stockFilter
+      const matchesStock = state.stockFilter === "All" || status === state.stockFilter
       const matchesPriceMin = isNaN(min) ? true : p.price >= min
       const matchesPriceMax = isNaN(max) ? true : p.price <= max
       return matchesQuery && matchesCategory && matchesStock && matchesPriceMin && matchesPriceMax
     })
     list.sort((a, b) => {
-      const dir = state.sortDir === 'asc' ? 1 : -1
+      const dir = state.sortDir === "asc" ? 1 : -1
       switch (state.sortKey) {
-        case 'name': return a.name.localeCompare(b.name) * dir
-        case 'price': return (a.price - b.price) * dir
-        case 'stock': return (a.stock - b.stock) * dir
+        case "name":
+          return a.name.localeCompare(b.name) * dir
+        case "price":
+          return (a.price - b.price) * dir
+        case "stock":
+          return (a.stock - b.stock) * dir
       }
     })
     return list
-  }, [state.products, state.query, state.category, state.stockFilter, state.priceMin, state.priceMax, state.sortKey, state.sortDir])
+  }, [
+    state.products,
+    state.query,
+    state.category,
+    state.stockFilter,
+    state.priceMin,
+    state.priceMax,
+    state.sortKey,
+    state.sortDir,
+  ])
 
   const stats = useMemo(() => {
     const total = state.products.length
-    const inStock = state.products.filter((p) => stockStatus(p.stock) === 'In Stock').length
-    const lowStock = state.products.filter((p) => stockStatus(p.stock) === 'Low Stock').length
-    const outStock = state.products.filter((p) => stockStatus(p.stock) === 'Out of Stock').length
-    const avg = state.products.length ? state.products.reduce((s, p) => s + p.price, 0) / state.products.length : 0
+    const inStock = state.products.filter((p) => stockStatus(p.stock) === "In Stock").length
+    const lowStock = state.products.filter((p) => stockStatus(p.stock) === "Low Stock").length
+    const outStock = state.products.filter((p) => stockStatus(p.stock) === "Out of Stock").length
+    const avg = state.products.length
+      ? state.products.reduce((s, p) => s + p.price, 0) / state.products.length
+      : 0
     return { total, inStock, lowStock, outStock, avg }
   }, [state.products])
 
-  const onAdd = () => dispatch({ type: 'OPEN_MODAL', modal: { type: 'add', product: null } })
-  const onEdit = (p: any) => dispatch({ type: 'OPEN_MODAL', modal: { type: 'edit', product: p } })
-  const onDelete = (p: any) => dispatch({ type: 'CONFIRM_DELETE', product: p })
+  const onAdd = () => dispatch({ type: "OPEN_MODAL", modal: { type: "add", product: null } })
+  const onEdit = (p: any) => dispatch({ type: "OPEN_MODAL", modal: { type: "edit", product: p } })
+  const onDelete = (p: any) => dispatch({ type: "CONFIRM_DELETE", product: p })
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
@@ -78,10 +97,18 @@ export default function App() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <h1 className="text-2xl font-bold tracking-tight">Product Inventory Dashboard</h1>
           <div className="flex items-center gap-2">
-            <button onClick={() => dispatch({ type: 'SET_THEME', theme: state.theme === 'light' ? 'dark' : 'light' })} className="rounded-xl border border-gray-200 px-3 py-2 text-sm shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800">
-              {state.theme === 'light' ? 'Dark' : 'Light'} mode
+            <button
+              onClick={() =>
+                dispatch({ type: "SET_THEME", theme: state.theme === "light" ? "dark" : "light" })
+              }
+              className="rounded-xl border border-gray-200 px-3 py-2 text-sm shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800"
+            >
+              {state.theme === "light" ? "Dark" : "Light"} mode
             </button>
-            <button onClick={onAdd} className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button
+              onClick={onAdd}
+              className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               + Add Product
             </button>
           </div>
@@ -91,10 +118,20 @@ export default function App() {
       <section className="mx-auto max-w-7xl px-4 py-4">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-12">
           <div className="md:col-span-4">
-            <input type="text" value={state.query} onChange={(e) => dispatch({ type: 'SET_QUERY', query: e.target.value })} placeholder="Search by name or description" className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900" />
+            <input
+              type="text"
+              value={state.query}
+              onChange={(e) => dispatch({ type: "SET_QUERY", query: e.target.value })}
+              placeholder="Search by name or description"
+              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+            />
           </div>
           <div className="md:col-span-2">
-            <select value={state.category} onChange={(e) => dispatch({ type: 'SET_CATEGORY', category: e.target.value as any })} className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900">
+            <select
+              value={state.category}
+              onChange={(e) => dispatch({ type: "SET_CATEGORY", category: e.target.value as any })}
+              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+            >
               <option value="All">All Categories</option>
               <option>Electronics</option>
               <option>Clothing</option>
@@ -102,7 +139,11 @@ export default function App() {
             </select>
           </div>
           <div className="md:col-span-2">
-            <select value={state.stockFilter} onChange={(e) => dispatch({ type: 'SET_STOCK', stock: e.target.value as any })} className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900">
+            <select
+              value={state.stockFilter}
+              onChange={(e) => dispatch({ type: "SET_STOCK", stock: e.target.value as any })}
+              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+            >
               <option value="All">Any Stock</option>
               <option>In Stock</option>
               <option>Low Stock</option>
@@ -110,31 +151,66 @@ export default function App() {
             </select>
           </div>
           <div className="md:col-span-2">
-            <input type="number" inputMode="decimal" value={state.priceMin} onChange={(e) => dispatch({ type: 'SET_PRICE_MIN', value: e.target.value })} placeholder="Min €" className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900" />
+            <input
+              type="number"
+              inputMode="decimal"
+              value={state.priceMin}
+              onChange={(e) => dispatch({ type: "SET_PRICE_MIN", value: e.target.value })}
+              placeholder="Min €"
+              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+            />
           </div>
           <div className="md:col-span-2">
-            <input type="number" inputMode="decimal" value={state.priceMax} onChange={(e) => dispatch({ type: 'SET_PRICE_MAX', value: e.target.value })} placeholder="Max €" className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900" />
+            <input
+              type="number"
+              inputMode="decimal"
+              value={state.priceMax}
+              onChange={(e) => dispatch({ type: "SET_PRICE_MAX", value: e.target.value })}
+              placeholder="Max €"
+              className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+            />
           </div>
         </div>
 
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <label className="text-sm">Sort by</label>
-            <select value={state.sortKey} onChange={(e) => dispatch({ type: 'SET_SORT', key: e.target.value as SortKey, dir: state.sortDir })} className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900">
+            <select
+              value={state.sortKey}
+              onChange={(e) =>
+                dispatch({ type: "SET_SORT", key: e.target.value as SortKey, dir: state.sortDir })
+              }
+              className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900"
+            >
               <option value="name">Name</option>
               <option value="price">Price</option>
               <option value="stock">Stock</option>
             </select>
-            <button onClick={() => dispatch({ type: 'SET_SORT', key: state.sortKey, dir: state.sortDir === 'asc' ? 'desc' : 'asc' })} className="rounded-xl border border-gray-200 px-3 py-2 text-sm shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800">
-              {state.sortDir === 'asc' ? 'Asc' : 'Desc'}
+            <button
+              onClick={() =>
+                dispatch({
+                  type: "SET_SORT",
+                  key: state.sortKey,
+                  dir: state.sortDir === "asc" ? "desc" : "asc",
+                })
+              }
+              className="rounded-xl border border-gray-200 px-3 py-2 text-sm shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:hover:bg-gray-800"
+            >
+              {state.sortDir === "asc" ? "Asc" : "Desc"}
             </button>
           </div>
 
           <div className="flex items-center gap-2">
-            <button onClick={() => dispatch({ type: 'SET_VIEW', view: 'grid' })} className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 ${state.view === 'grid' ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/30' : 'border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
+            <button
+              onClick={() => dispatch({ type: "SET_VIEW", view: "grid" })}
+              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 ${state.view === "grid" ? "border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/30" : "border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+            >
               Grid
             </button>
-            <button onClick={() => dispatch({ type: 'SET_VIEW', view: 'table' })} className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 ${state.view === 'table' ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/30' : 'border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
+            <button
+              onClick={() => dispatch({ type: "SET_VIEW", view: "table" })}
+              className={`rounded-xl border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 ${state.view === "table" ? "border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/30" : "border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+            >
               Table
             </button>
           </div>
@@ -160,10 +236,15 @@ export default function App() {
           <ErrorBanner message={state.error} onRetry={load} />
         ) : filtered.length === 0 ? (
           <EmptyState onAdd={onAdd} />
-        ) : state.view === 'grid' ? (
+        ) : state.view === "grid" ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p) => (
-              <ProductCard key={p.id} product={p} onEdit={() => onEdit(p)} onDelete={() => onDelete(p)} />
+              <ProductCard
+                key={p.id}
+                product={p}
+                onEdit={() => onEdit(p)}
+                onDelete={() => onDelete(p)}
+              />
             ))}
           </div>
         ) : (
@@ -175,19 +256,19 @@ export default function App() {
         <ProductModal
           mode={state.modal.type}
           product={state.modal.product ?? undefined}
-          onClose={() => dispatch({ type: 'CLOSE_MODAL' })}
+          onClose={() => dispatch({ type: "CLOSE_MODAL" })}
           onSubmit={async (payload) => {
             try {
-              if (state.modal.type === 'add') {
+              if (state.modal.type === "add") {
                 const created = await api.create(payload as any)
-                dispatch({ type: 'UPSERT_PRODUCT', product: created })
-              } else if (state.modal.type === 'edit' && state.modal.product) {
+                dispatch({ type: "UPSERT_PRODUCT", product: created })
+              } else if (state.modal.type === "edit" && state.modal.product) {
                 const updated = await api.update(state.modal.product.id, payload)
-                dispatch({ type: 'UPSERT_PRODUCT', product: updated })
+                dispatch({ type: "UPSERT_PRODUCT", product: updated })
               }
-              dispatch({ type: 'CLOSE_MODAL' })
+              dispatch({ type: "CLOSE_MODAL" })
             } catch (e: any) {
-              alert(e?.message || 'Failed to save product')
+              alert(e?.message || "Failed to save product")
             }
           }}
         />
@@ -199,22 +280,22 @@ export default function App() {
           body={`Are you sure you want to delete "${state.confirmDelete.name}"? This cannot be undone.`}
           confirmText="Delete"
           destructive
-          onCancel={() => dispatch({ type: 'CONFIRM_DELETE', product: null })}
+          onCancel={() => dispatch({ type: "CONFIRM_DELETE", product: null })}
           onConfirm={async () => {
             try {
               await api.remove(state.confirmDelete!.id)
-              dispatch({ type: 'REMOVE_PRODUCT', id: state.confirmDelete!.id })
+              dispatch({ type: "REMOVE_PRODUCT", id: state.confirmDelete!.id })
             } catch (e: any) {
-              alert(e?.message || 'Failed to delete')
+              alert(e?.message || "Failed to delete")
             } finally {
-              dispatch({ type: 'CONFIRM_DELETE', product: null })
+              dispatch({ type: "CONFIRM_DELETE", product: null })
             }
           }}
         />
       )}
 
       <footer className="mx-auto max-w-7xl px-4 pb-10 pt-6 text-center text-xs text-gray-500">
-        Built with React + TypeScript + Tailwind. Data is persisted to your browser.
+        Built with React + TypeScript + Tailwind. Data persists in your browser.
       </footer>
     </div>
   )
