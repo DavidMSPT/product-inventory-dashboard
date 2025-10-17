@@ -1,7 +1,9 @@
+import { memo } from "react"
 import StatusBadge from "./StatusBadge"
 import type { Product } from "@store/types"
 import { formatCurrency } from "@lib/format"
-export default function ProductTable({
+
+function ProductTable({
   products,
   onEdit,
   onDelete,
@@ -65,3 +67,5 @@ export default function ProductTable({
     </div>
   )
 }
+
+export default memo(ProductTable)

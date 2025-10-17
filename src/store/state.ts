@@ -1,6 +1,10 @@
 import type { Product, ViewMode, Theme, SortKey } from './types'
 import type { StockStatus } from '@lib/stock'
-const themeStorageKey = 'inventory.theme'
+
+export type ModalState = 
+  | { type: 'add'; product: null }
+  | { type: 'edit'; product: Product }
+  | { type: null; product: null }
 
 export type GlobalState = {
   products: Product[]
@@ -15,7 +19,7 @@ export type GlobalState = {
   sortKey: SortKey
   sortDir: 'asc' | 'desc'
   theme: Theme
-  modal: { type: 'add' | 'edit' | null; product: Product | null }
+  modal: ModalState
   confirmDelete: Product | null
 }
 
@@ -29,10 +33,7 @@ export const initialState: GlobalState = {
   priceMax: '',
   sortKey: 'name',
   sortDir: 'asc',
-  theme: (localStorage.getItem(themeStorageKey) as Theme) || 'light',
+  theme: (localStorage.getItem('inventory.theme') as Theme) || 'light',
   modal: { type: null, product: null },
   confirmDelete: null
 }
-
-export const setViewPersist = (v: ViewMode) => localStorage.setItem('inventory.view', v)
-export const setThemePersist = (t: Theme) => localStorage.setItem(themeStorageKey, t)

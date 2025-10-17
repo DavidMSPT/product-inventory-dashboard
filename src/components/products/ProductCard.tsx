@@ -1,14 +1,16 @@
+import { memo } from "react"
 import { formatCurrency } from "@lib/format"
 import type { Product } from "@store/types"
 import StatusBadge from "./StatusBadge"
-export default function ProductCard({
+
+function ProductCard({
   product,
   onEdit,
   onDelete,
 }: {
   product: Product
-  onEdit: () => void
-  onDelete: () => void
+  onEdit: (product: Product) => void
+  onDelete: (product: Product) => void
 }) {
   return (
     <div className="group rounded-2xl border border-border bg-surface shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
@@ -34,13 +36,13 @@ export default function ProductCard({
           <span className="rounded-full bg-bg-muted px-2 py-1">{product.category}</span>
           <div className="flex items-center gap-2">
             <button
-              onClick={onEdit}
+              onClick={() => onEdit(product)}
               className="rounded-lg border border-border px-2.5 py-1.5 hover:bg-bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
             >
               Edit
             </button>
             <button
-              onClick={onDelete}
+              onClick={() => onDelete(product)}
               className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-rose-700 hover:bg-rose-100 focus:outline-none focus:ring-2 focus:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300"
             >
               Delete
@@ -51,3 +53,5 @@ export default function ProductCard({
     </div>
   )
 }
+
+export default memo(ProductCard)

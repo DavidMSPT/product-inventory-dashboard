@@ -12,24 +12,36 @@ import { stockStatus } from "@lib/stock"
 import { formatCurrency } from "@lib/format"
 import { initialState } from "@store/state"
 import { reducer } from "@store/reducer"
-import type { SortKey } from "@store/types"
+import type { SortKey, Product } from "@store/types"
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  // Sync theme with DOM
   useEffect(() => {
     const root = document.documentElement
     if (state.theme === "dark") root.classList.add("dark")
     else root.classList.remove("dark")
   }, [state.theme])
 
+  // Persist theme to localStorage
+  useEffect(() => {
+    localStorage.setItem("inventory.theme", state.theme)
+  }, [state.theme])
+
+  // Persist view mode to localStorage
+  useEffect(() => {
+    localStorage.setItem("inventory.view", state.view)
+  }, [state.view])
+
   const load = useCallback(async () => {
     dispatch({ type: "LOAD_START" })
     try {
       const products = await api.list()
       dispatch({ type: "LOAD_SUCCESS", products })
-    } catch (e: any) {
-      dispatch({ type: "LOAD_ERROR", error: e?.message || "Failed to load" })
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Failed to load"
+      dispatch({ type: "LOAD_ERROR", error })
     }
   }, [])
 
@@ -78,18 +90,35 @@ export default function App() {
 
   const stats = useMemo(() => {
     const total = state.products.length
-    const inStock = state.products.filter((p) => stockStatus(p.stock) === "In Stock").length
-    const lowStock = state.products.filter((p) => stockStatus(p.stock) === "Low Stock").length
-    const outStock = state.products.filter((p) => stockStatus(p.stock) === "Out of Stock").length
-    const avg = state.products.length
-      ? state.products.reduce((s, p) => s + p.price, 0) / state.products.length
-      : 0
+    let inStock = 0
+    let lowStock = 0
+    let outStock = 0
+    let totalPrice = 0
+
+    // Single pass through products
+    for (const p of state.products) {
+      const status = stockStatus(p.stock)
+      if (status === "In Stock") inStock++
+      else if (status === "Low Stock") lowStock++
+      else if (status === "Out of Stock") outStock++
+      totalPrice += p.price
+    }
+
+    const avg = total ? totalPrice / total : 0
     return { total, inStock, lowStock, outStock, avg }
   }, [state.products])
 
-  const onAdd = () => dispatch({ type: "OPEN_MODAL", modal: { type: "add", product: null } })
-  const onEdit = (p: any) => dispatch({ type: "OPEN_MODAL", modal: { type: "edit", product: p } })
-  const onDelete = (p: any) => dispatch({ type: "CONFIRM_DELETE", product: p })
+  const onAdd = useCallback(() => {
+    dispatch({ type: "OPEN_MODAL", modal: { type: "add", product: null } })
+  }, [])
+
+  const onEdit = useCallback((p: Product) => {
+    dispatch({ type: "OPEN_MODAL", modal: { type: "edit", product: p } })
+  }, [])
+
+  const onDelete = useCallback((p: Product) => {
+    dispatch({ type: "CONFIRM_DELETE", product: p })
+  }, [])
 
   return (
     <div className="min-h-screen bg-bg text-text transition-colors duration-300">
@@ -239,12 +268,7 @@ export default function App() {
         ) : state.view === "grid" ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                onEdit={() => onEdit(p)}
-                onDelete={() => onDelete(p)}
-              />
+              <ProductCard key={p.id} product={p} onEdit={onEdit} onDelete={onDelete} />
             ))}
           </div>
         ) : (
@@ -267,8 +291,9 @@ export default function App() {
                 dispatch({ type: "UPSERT_PRODUCT", product: updated })
               }
               dispatch({ type: "CLOSE_MODAL" })
-            } catch (e: any) {
-              alert(e?.message || "Failed to save product")
+            } catch (e) {
+              const error = e instanceof Error ? e.message : "Failed to save product"
+              alert(error)
             }
           }}
         />
@@ -285,8 +310,9 @@ export default function App() {
             try {
               await api.remove(state.confirmDelete!.id)
               dispatch({ type: "REMOVE_PRODUCT", id: state.confirmDelete!.id })
-            } catch (e: any) {
-              alert(e?.message || "Failed to delete")
+            } catch (e) {
+              const error = e instanceof Error ? e.message : "Failed to delete"
+              alert(error)
             } finally {
               dispatch({ type: "CONFIRM_DELETE", product: null })
             }
