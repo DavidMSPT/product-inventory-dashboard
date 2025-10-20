@@ -1,7 +1,7 @@
 import { memo } from "react"
 import StatusBadge from "./StatusBadge"
 import type { Product } from "@store/types"
-import { formatCurrency } from "@lib/format"
+import { formatCurrency } from "@utilities/format"
 
 function ProductTable({
   products,
@@ -41,20 +41,19 @@ function ProductTable({
               <td className="px-4 py-3">
                 <div className="flex items-center gap-2">
                   <StatusBadge stock={p.stock} />
-                  <span className="text-text-muted">({p.stock})</span>
                 </div>
               </td>
               <td className="px-4 py-3">
                 <div className="flex items-center justify-end gap-2">
                   <button
                     onClick={() => onEdit(p)}
-                    className="rounded-lg border border-border px-2.5 py-1.5 text-xs hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="rounded-lg border border-border px-2.5 py-1.5 text-xs hover:bg-bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:hover:border-primary dark:hover:shadow-primary/20 dark:hover:shadow-lg"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => onDelete(p)}
-                    className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs text-rose-700 hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300"
+                    className="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs text-rose-700 hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300 dark:hover:border-rose-500 dark:hover:shadow-rose-500/20 dark:hover:shadow-lg"
                   >
                     Delete
                   </button>

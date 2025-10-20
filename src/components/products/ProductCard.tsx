@@ -1,5 +1,5 @@
 import { memo } from "react"
-import { formatCurrency } from "@lib/format"
+import { formatCurrency } from "@utilities/format"
 import type { Product } from "@store/types"
 import StatusBadge from "./StatusBadge"
 

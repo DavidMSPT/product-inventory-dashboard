@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useMemo, useReducer } from "react"
-import SummaryCard from "@components/cards/SummaryCard"
-import ProductCard from "@components/products/ProductCard"
-import ProductTable from "@components/products/ProductTable"
-import ErrorBanner from "@components/feedback/ErrorBanner"
-import EmptyState from "@components/feedback/EmptyState"
-import SkeletonGrid from "@components/feedback/SkeletonGrid"
-import ConfirmModal from "@components/modals/ConfirmModal"
-import ProductModal from "@components/modals/ProductModal"
-import { api } from "@lib/api"
-import { stockStatus, STOCK_STATUSES } from "@lib/stock"
-import { formatCurrency } from "@lib/format"
+import {
+  SummaryCard,
+  ProductCard,
+  ProductTable,
+  ErrorBanner,
+  EmptyState,
+  SkeletonGrid,
+  ConfirmModal,
+  ProductModal,
+} from "@components"
+import { api } from "@utilities/api"
+import { stockStatus, STOCK_STATUSES } from "@utilities/stock"
+import { formatCurrency } from "@utilities/format"
 import { initialState } from "@store/state"
 import { reducer } from "@store/reducer"
 import type { SortKey, Product } from "@store/types"

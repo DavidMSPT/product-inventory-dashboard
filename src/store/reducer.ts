@@ -1,6 +1,6 @@
 import type { GlobalState } from './state'
 import type { SortKey } from './types'
-import { save } from '@lib/storage'
+import { save } from '@utilities/storage'
 
 export type Action =
   | { type: 'LOAD_START' }

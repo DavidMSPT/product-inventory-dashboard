@@ -1,5 +1,5 @@
 import type { Product, ViewMode, Theme, SortKey } from './types'
-import type { StockStatus } from '@lib/stock'
+import type { StockStatus } from 'utilities/stock'
 
 export type ModalState = 
   | { type: 'add'; product: null }

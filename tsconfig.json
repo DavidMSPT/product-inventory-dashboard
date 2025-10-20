@@ -20,15 +20,19 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "src",
     "paths": {
+      "@app": ["app"],
       "@app/*": [
         "app/*"
       ],
+      "@components": ["components"],
       "@components/*": [
         "components/*"
       ],
-      "@lib/*": [
-        "lib/*"
+      "@utilities": ["utilities"],
+      "@utilities/*": [
+        "utilities/*"
       ],
+      "@store": ["store"],
       "@store/*": [
         "store/*"
       ]

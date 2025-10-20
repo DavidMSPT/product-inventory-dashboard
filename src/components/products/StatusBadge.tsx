@@ -1,4 +1,4 @@
-import { stockStatus } from "@lib/stock"
+import { stockStatus } from "@utilities/stock"
 export default function StatusBadge({ stock }: { stock: number }) {
   const status = stockStatus(stock)
   const color =

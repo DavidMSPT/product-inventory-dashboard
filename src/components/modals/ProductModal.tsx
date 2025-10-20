@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useMemo } from "react"
 import type { Product, Category } from "@store/types"
 import { CATEGORIES } from "@store/types"
 import ModalShell from "./ModalShell"
@@ -73,6 +73,22 @@ export default function ProductModal({
       setBusy(false)
     }
   }
+
+  const hasChanges = useMemo(() => {
+    if (mode !== "edit") return true
+    if (!product) return true
+    const nameChanged = name.trim() !== product.name
+    const descChanged = description.trim() !== product.description
+    const priceNum = parseFloat(price)
+    const priceChanged = !Number.isNaN(priceNum) ? priceNum !== product.price : false
+    const stockNum = parseInt(stock, 10)
+    const stockChanged = !Number.isNaN(stockNum) ? stockNum !== product.stock : false
+    const categoryChanged = category !== product.category
+    const imageChanged = imageUrl.trim() !== product.imageUrl
+    return (
+      nameChanged || descChanged || priceChanged || stockChanged || categoryChanged || imageChanged
+    )
+  }, [mode, product, name, description, price, stock, category, imageUrl])
 
   return (
     <ModalShell onClose={onClose}>
@@ -166,8 +182,8 @@ export default function ProductModal({
           </button>
           <button
             onClick={submit}
-            disabled={busy}
-            className="rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            disabled={busy || (mode === "edit" && !hasChanges)}
+            className={`rounded-xl px-4 py-2 text-sm font-medium text-primary-foreground shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${busy || (mode === "edit" && !hasChanges) ? "bg-primary/30 cursor-not-allowed" : "bg-primary hover:bg-primary/90"}`}
           >
             {busy ? "Saving..." : mode === "add" ? "Add Product" : "Save Changes"}
           </button>
