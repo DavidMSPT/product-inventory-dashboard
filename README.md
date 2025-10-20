@@ -49,7 +49,7 @@ src/
 │   ├── feedback/     # Loading, error, empty states
 │   ├── modals/       # Dialog components
 │   └── products/     # Product display components
-├── lib/              # Utilities and helpers
+├── utilities/        # Utilities and helpers
 │   ├── api.ts        # Product CRUD operations
 │   ├── format.ts     # Currency & text formatting
 │   ├── stock.ts      # Stock status logic
